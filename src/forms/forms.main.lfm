@@ -42,7 +42,7 @@ object frmMain: TfrmMain
         ClientHeight = 195
         object cobArrayFrom: TComboBox
           Left = 4
-          Height = 29
+          Height = 33
           Top = 4
           Width = 200
           Align = alTop
@@ -55,8 +55,8 @@ object frmMain: TfrmMain
         end
         object memArraysFrom: TMemo
           Left = 4
-          Height = 154
-          Top = 37
+          Height = 150
+          Top = 41
           Width = 392
           Align = alClient
           BorderSpacing.Around = 4
@@ -121,6 +121,15 @@ object frmMain: TfrmMain
         BorderSpacing.Top = 4
         TabOrder = 0
       end
+      object panArrayDetectedLanguage: TPanel
+        Left = 164
+        Height = 37
+        Top = 0
+        Width = 306
+        Align = alLeft
+        BevelOuter = bvNone
+        TabOrder = 1
+      end
     end
   end
   object grbWithObject: TGroupBox
@@ -156,6 +165,15 @@ object frmMain: TfrmMain
         BorderSpacing.Top = 4
         TabOrder = 0
       end
+      object panObjectDetectedLanguage: TPanel
+        Left = 166
+        Height = 37
+        Top = 0
+        Width = 306
+        Align = alLeft
+        BevelOuter = bvNone
+        TabOrder = 1
+      end
     end
     object pasObjectFromTo: TPairSplitter
       Left = 0
@@ -174,7 +192,7 @@ object frmMain: TfrmMain
         ClientHeight = 191
         object cobObjectFrom: TComboBox
           Left = 4
-          Height = 29
+          Height = 33
           Top = 4
           Width = 200
           Align = alTop
@@ -187,8 +205,8 @@ object frmMain: TfrmMain
         end
         object memObjectFrom: TMemo
           Left = 4
-          Height = 150
-          Top = 37
+          Height = 146
+          Top = 41
           Width = 392
           Align = alClient
           BorderSpacing.Around = 4
@@ -263,6 +281,9 @@ object frmMain: TfrmMain
       Caption = '&Translate'
       object mnuArraysTranslate: TMenuItem
         Action = actArraysTranslate
+      end
+      object mnuObjectTranslate: TMenuItem
+        Action = actObjectTranslate
       end
     end
   end

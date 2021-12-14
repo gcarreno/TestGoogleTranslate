@@ -45,13 +45,16 @@ type
     memObjectFrom: TMemo;
     memArraysTo: TMemo;
     memObjectTo: TMemo;
+    mnuObjectTranslate: TMenuItem;
     mnuTranslate: TMenuItem;
     mnuArraysTranslate: TMenuItem;
     mnuFile: TMenuItem;
     mnuFileExit: TMenuItem;
     mnuMain: TMainMenu;
     panArrayButtons: TPanel;
+    panObjectDetectedLanguage: TPanel;
     panObjectButtons: TPanel;
+    panArrayDetectedLanguage: TPanel;
     pasArraysFromTo: TPairSplitter;
     pasObjectFromTo: TPairSplitter;
     pssArraysFrom: TPairSplitterSide;
@@ -201,9 +204,16 @@ var
   jaTranslation, jaTranslationArray: TJSONArray;
 begin
   actArraysTranslate.Enabled:= False;
-  Application.ProcessMessages;
   memArraysTo.Clear;
+  panArrayDetectedLanguage.Caption:= EmptyStr;
+  Application.ProcessMessages;
   try
+
+    if Length(memArraysFrom.Text) = 0 then
+    begin
+      ShowMessage('Need something to translate');
+      exit;
+    end;
 
     if (cobArrayFrom.ItemIndex <= 0) and (cobArrayTo.ItemIndex <= 0) then
     begin
@@ -242,9 +252,9 @@ begin
         end;
         if cobArrayFrom.ItemIndex = 0 then
         begin
-          ShowMessage(Format(cSourceLanguage, [
+           panArrayDetectedLanguage.Caption:= Format(cSourceLanguage, [
            ShortCodetoLongCode(jdResponse.FindPath('[2]').AsString)
-          ]));
+          ]);
         end;
       end;
     finally
@@ -267,9 +277,16 @@ var
   jaSentencesArray: TJSONArray;
 begin
   actObjectTranslate.Enabled:= False;
-  Application.ProcessMessages;
   memObjectTo.Clear;
+  panObjectDetectedLanguage.Caption:= EmptyStr;
+  Application.ProcessMessages;
   try
+
+    if Length(memObjectFrom.Text) = 0 then
+    begin
+      ShowMessage('Need something to translate');
+      exit;
+    end;
 
     if (cobObjectFrom.ItemIndex <= 0) and (cobObjectTo.ItemIndex <= 0) then
     begin
@@ -304,9 +321,9 @@ begin
         end;
         if cobObjectFrom.ItemIndex = 0 then
         begin
-          ShowMessage(Format(cSourceLanguage, [
+          panObjectDetectedLanguage.Caption:= Format(cSourceLanguage, [
             ShortCodetoLongCode(joTranslation.Get(cJSONSource,''))
-          ]));
+          ]);
         end;
       end;
     finally
