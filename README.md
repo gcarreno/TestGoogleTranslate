@@ -1,3 +1,3 @@
 # TestGoogleTranslate
 
-Testing Google Translate with Lazarus.
+Testing Google Translate with Lazarus/FPC.
