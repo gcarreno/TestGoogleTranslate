@@ -13,20 +13,21 @@ object frmMain: TfrmMain
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnResize = FormResize
   object grbWithArrays: TGroupBox
     Left = 0
-    Height = 496
+    Height = 250
     Top = 4
     Width = 962
-    Align = alClient
+    Align = alTop
     BorderSpacing.Top = 4
-    Caption = ' Google Response with Arrays '
-    ClientHeight = 478
+    Caption = ' Google Response with JSON Arrays '
+    ClientHeight = 232
     ClientWidth = 960
     TabOrder = 0
     object pasArraysFromTo: TPairSplitter
       Left = 0
-      Height = 441
+      Height = 195
       Top = 37
       Width = 960
       Align = alClient
@@ -34,11 +35,11 @@ object frmMain: TfrmMain
       object pssArraysFrom: TPairSplitterSide
         Cursor = crArrow
         Left = 0
-        Height = 441
+        Height = 195
         Top = 0
         Width = 400
         ClientWidth = 400
-        ClientHeight = 441
+        ClientHeight = 195
         object cobArrayFrom: TComboBox
           Left = 4
           Height = 29
@@ -49,16 +50,12 @@ object frmMain: TfrmMain
           BorderSpacing.Top = 4
           Constraints.MaxWidth = 200
           ItemHeight = 0
-          Items.Strings = (
-            'Detect'
-            'English'
-          )
           Style = csDropDownList
           TabOrder = 1
         end
         object memArraysFrom: TMemo
           Left = 4
-          Height = 400
+          Height = 154
           Top = 37
           Width = 392
           Align = alClient
@@ -74,11 +71,11 @@ object frmMain: TfrmMain
       object pssArraysTo: TPairSplitterSide
         Cursor = crArrow
         Left = 405
-        Height = 441
+        Height = 195
         Top = 0
         Width = 555
         ClientWidth = 555
-        ClientHeight = 441
+        ClientHeight = 195
         object cobArrayTo: TComboBox
           Left = 4
           Height = 33
@@ -94,7 +91,7 @@ object frmMain: TfrmMain
         end
         object memArraysTo: TMemo
           Left = 4
-          Height = 396
+          Height = 150
           Top = 41
           Width = 547
           Align = alClient
@@ -130,6 +127,118 @@ object frmMain: TfrmMain
       end
     end
   end
+  object grbWithObject: TGroupBox
+    Left = 0
+    Height = 246
+    Top = 254
+    Width = 962
+    Align = alClient
+    Caption = ' Google Response With JSON Object '
+    ClientHeight = 228
+    ClientWidth = 960
+    TabOrder = 1
+    object panObjectButtons: TPanel
+      Left = 0
+      Height = 37
+      Top = 0
+      Width = 960
+      Align = alTop
+      AutoSize = True
+      BevelOuter = bvNone
+      ClientHeight = 37
+      ClientWidth = 960
+      TabOrder = 0
+      object btnObjectTranslate: TButton
+        Left = 4
+        Height = 33
+        Top = 4
+        Width = 162
+        Action = actObjectTranslate
+        Align = alLeft
+        AutoSize = True
+        BorderSpacing.Left = 4
+        BorderSpacing.Top = 4
+        TabOrder = 0
+      end
+    end
+    object pasObjectFromTo: TPairSplitter
+      Left = 0
+      Height = 191
+      Top = 37
+      Width = 960
+      Align = alClient
+      Position = 400
+      object pssObjectFrom: TPairSplitterSide
+        Cursor = crArrow
+        Left = 0
+        Height = 191
+        Top = 0
+        Width = 400
+        ClientWidth = 400
+        ClientHeight = 191
+        object cobObjectFrom: TComboBox
+          Left = 4
+          Height = 29
+          Top = 4
+          Width = 200
+          Align = alTop
+          BorderSpacing.Left = 4
+          BorderSpacing.Top = 4
+          Constraints.MaxWidth = 200
+          ItemHeight = 0
+          Style = csDropDownList
+          TabOrder = 1
+        end
+        object memObjectFrom: TMemo
+          Left = 4
+          Height = 150
+          Top = 37
+          Width = 392
+          Align = alClient
+          BorderSpacing.Around = 4
+          Lines.Strings = (
+            'Os meus pés estão a doer.'
+            'As minhas mãos estão frias.'
+          )
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+        end
+      end
+      object pssObjectTo: TPairSplitterSide
+        Cursor = crArrow
+        Left = 405
+        Height = 191
+        Top = 0
+        Width = 555
+        ClientWidth = 555
+        ClientHeight = 191
+        object cobObjectTo: TComboBox
+          Left = 4
+          Height = 33
+          Top = 4
+          Width = 200
+          Align = alTop
+          BorderSpacing.Left = 4
+          BorderSpacing.Top = 4
+          Constraints.MaxWidth = 200
+          ItemHeight = 0
+          Style = csDropDownList
+          TabOrder = 1
+        end
+        object memObjectTo: TMemo
+          Left = 4
+          Height = 146
+          Top = 41
+          Width = 547
+          Align = alClient
+          BorderSpacing.Around = 4
+          ReadOnly = True
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+        end
+      end
+    end
+  end
   object aclMain: TActionList
     Left = 48
     Top = 394
@@ -139,8 +248,14 @@ object frmMain: TfrmMain
       Hint = 'Exit'
     end
     object actArraysTranslate: TAction
+      Category = 'Arrays'
       Caption = 'With &Arrays Translate'
       OnExecute = actArraysTranslateExecute
+    end
+    object actObjectTranslate: TAction
+      Category = 'Object'
+      Caption = 'With &Object Translate'
+      OnExecute = actObjectTranslateExecute
     end
   end
   object mnuMain: TMainMenu

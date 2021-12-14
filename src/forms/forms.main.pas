@@ -32,22 +32,35 @@ type
     aclMain: TActionList;
     actFileExit: TFileExit;
     actArraysTranslate: TAction;
+    actObjectTranslate: TAction;
     btnArraysTranslate: TButton;
+    btnObjectTranslate: TButton;
     cobArrayFrom: TComboBox;
+    cobObjectFrom: TComboBox;
     cobArrayTo: TComboBox;
+    cobObjectTo: TComboBox;
     grbWithArrays: TGroupBox;
+    grbWithObject: TGroupBox;
     memArraysFrom: TMemo;
+    memObjectFrom: TMemo;
     memArraysTo: TMemo;
+    memObjectTo: TMemo;
     mnuTranslate: TMenuItem;
     mnuArraysTranslate: TMenuItem;
     mnuFile: TMenuItem;
     mnuFileExit: TMenuItem;
     mnuMain: TMainMenu;
     panArrayButtons: TPanel;
+    panObjectButtons: TPanel;
     pasArraysFromTo: TPairSplitter;
+    pasObjectFromTo: TPairSplitter;
     pssArraysFrom: TPairSplitterSide;
+    pssObjectFrom: TPairSplitterSide;
     pssArraysTo: TPairSplitterSide;
+    pssObjectTo: TPairSplitterSide;
     procedure actArraysTranslateExecute(Sender: TObject);
+    procedure actObjectTranslateExecute(Sender: TObject);
+    procedure FormResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
@@ -89,6 +102,10 @@ const
     'Spanish',
     'Italian'
   );
+  cJSONSentences = 'sentences';
+  cJSONTranslation = 'trans';
+  cJSONSource = 'src';
+  cSourceLanguage = 'Source language: %s';
 
 {$R *.lfm}
 
@@ -112,9 +129,15 @@ begin
   begin
     cobArrayFrom.Items.Add(sItem);
     cobArrayTo.Items.Add(sItem);
+
+    cobObjectFrom.Items.Add(sItem);
+    cobObjectTo.Items.Add(sItem);
   end;
   cobArrayFrom.ItemIndex:= 0;
   cobArrayTo.ItemIndex:= 1;
+
+  cobObjectFrom.ItemIndex:= 0;
+  cobObjectTo.ItemIndex:= 1;
 end;
 
 function TfrmMain.CallGoogleTranslate(AURL: String): TJSONStringType;
@@ -132,6 +155,13 @@ begin
     doc.Free;
     client.Free;
   end;
+end;
+
+procedure TfrmMain.FormResize(Sender: TObject);
+begin
+  grbWithArrays.Height:= ClientHeight div 2;
+  pasArraysFromTo.Position:= ClientWidth div 2;
+  pasObjectFromTo.Position:= ClientWidth div 2;
 end;
 
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: boolean);
@@ -170,9 +200,15 @@ begin
       +'&dt=t'
       +'&ie=UTF-8&oe=UTF-8'
       ;
+
+    //ShowMessage(URL);
+
     strResponse:= CallGoogleTranslate(URL);
     try
       jdResponse:= GetJSON(strResponse);
+
+      //memArraysTo.Append(jdResponse.FormatJSON); exit;
+
       jdTranslation:= jdResponse.FindPath('[0]');
       if (jdTranslation <> nil) and (jdTranslation.JSONType = jtArray) then
       begin
@@ -186,6 +222,10 @@ begin
             memArraysTo.Append(Trim(jaTranslationArray[0].AsString));
           end;
         end;
+        if cobArrayFrom.ItemIndex = 0 then
+        begin
+          ShowMessage(Format(cSourceLanguage, [ jdResponse.FindPath('[2]').AsString ]));
+        end;
       end;
     finally
       jdResponse.Free;
@@ -194,6 +234,66 @@ begin
   finally
     Application.ProcessMessages;
     actArraysTranslate.Enabled:= True;
+  end;
+end;
+
+procedure TfrmMain.actObjectTranslateExecute(Sender: TObject);
+var
+  URL: String;
+  Index: integer;
+  strResponse: TJSONStringType;
+  jdResponse: TJSONData;
+  joTranslation, joSentence: TJSONObject;
+  jaSentencesArray: TJSONArray;
+begin
+  actObjectTranslate.Enabled:= False;
+  Application.ProcessMessages;
+  memObjectTo.Clear;
+  try
+
+    if (cobObjectFrom.ItemIndex <= 0) and (cobObjectTo.ItemIndex <= 0) then
+    begin
+      ShowMessage('Cannot have language detection on both sides');
+      exit;
+    end;
+
+    URL:='https://translate.googleapis.com/translate_a/single?client=gtx'
+      +'&q='+HTTPEncode(memObjectFrom.Text)
+      +'&sl='+cArrayShortLanguages[cobObjectFrom.ItemIndex]
+      +'&tl='+cArrayShortLanguages[cobObjectTo.ItemIndex]
+      +'&dt=t&dj=1'
+      +'&ie=UTF-8&oe=UTF-8'
+      ;
+
+    //ShowMessage(URL);
+
+    strResponse:= CallGoogleTranslate(URL);
+    try
+      jdResponse:= GetJSON(strResponse);
+
+      //memObjectTo.Append(jdResponse.FormatJSON); exit;
+
+      if (jdResponse <> nil) and (jdResponse.JSONType = jtObject) then
+      begin
+        joTranslation:= TJSONObject(jdResponse);
+        jaSentencesArray:= TJSONArray(joTranslation.FindPath(cJSONSentences));
+        for Index:=0 to Pred(jaSentencesArray.Count) do
+        begin
+          joSentence:= TJSONObject(jaSentencesArray[Index]);
+          memObjectTo.Append(Trim(joSentence.Get(cJSONTranslation,'')));
+        end;
+        if cobObjectFrom.ItemIndex = 0 then
+        begin
+          ShowMessage(Format(cSourceLanguage, [joTranslation.Get(cJSONSource,'')]));
+        end;
+      end;
+    finally
+      jdResponse.Free;
+    end;
+
+  finally
+    Application.ProcessMessages;
+    actObjectTranslate.Enabled:= True;
   end;
 end;
 
