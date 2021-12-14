@@ -70,6 +70,7 @@ type
     procedure FillCombos;
 
     function CallGoogleTranslate(AURL: String): TJSONStringType;
+    function ShortCodetoLongCode(AShortCode: String): String;
   public
 
   end;
@@ -84,23 +85,25 @@ uses
 ;
 
 const
-  cArrayShortLanguages: Array [0..6] of String = (
+  cArrayShortLanguages: Array [0..7] of String = (
     'auto',
     'en',
     'pt',
     'pl',
     'fr',
     'es',
-    'it'
+    'it',
+    'ru'
   );
-  cArrayLongLanguages: Array [0..6] of String = (
+  cArrayLongLanguages: Array [0..7] of String = (
     'Detect',
     'English',
     'Portuguese',
     'Polish',
     'French',
     'Spanish',
-    'Italian'
+    'Italian',
+    'Russian'
   );
   cJSONSentences = 'sentences';
   cJSONTranslation = 'trans';
@@ -154,6 +157,21 @@ begin
   finally
     doc.Free;
     client.Free;
+  end;
+end;
+
+function TfrmMain.ShortCodetoLongCode(AShortCode: String): String;
+var
+  Index: Integer;
+begin
+  Result:= 'Long name not found for ' + AShortCode;
+  for Index:= 1 to High(cArrayShortLanguages) do
+  begin
+    if AShortCode = cArrayShortLanguages[Index] then
+    begin
+      Result:= cArrayLongLanguages[Index];
+      break;
+    end;
   end;
 end;
 
@@ -224,7 +242,9 @@ begin
         end;
         if cobArrayFrom.ItemIndex = 0 then
         begin
-          ShowMessage(Format(cSourceLanguage, [ jdResponse.FindPath('[2]').AsString ]));
+          ShowMessage(Format(cSourceLanguage, [
+           ShortCodetoLongCode(jdResponse.FindPath('[2]').AsString)
+          ]));
         end;
       end;
     finally
@@ -284,7 +304,9 @@ begin
         end;
         if cobObjectFrom.ItemIndex = 0 then
         begin
-          ShowMessage(Format(cSourceLanguage, [joTranslation.Get(cJSONSource,'')]));
+          ShowMessage(Format(cSourceLanguage, [
+            ShortCodetoLongCode(joTranslation.Get(cJSONSource,''))
+          ]));
         end;
       end;
     finally

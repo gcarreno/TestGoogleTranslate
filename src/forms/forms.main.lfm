@@ -60,10 +60,6 @@ object frmMain: TfrmMain
           Width = 392
           Align = alClient
           BorderSpacing.Around = 4
-          Lines.Strings = (
-            'Os meus pés estão a doer.'
-            'As minhas mãos estão frias.'
-          )
           ScrollBars = ssAutoVertical
           TabOrder = 0
         end
@@ -196,10 +192,6 @@ object frmMain: TfrmMain
           Width = 392
           Align = alClient
           BorderSpacing.Around = 4
-          Lines.Strings = (
-            'Os meus pés estão a doer.'
-            'As minhas mãos estão frias.'
-          )
           ScrollBars = ssAutoVertical
           TabOrder = 0
         end
