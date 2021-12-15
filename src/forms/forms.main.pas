@@ -75,7 +75,11 @@ type
     function CallGoogleTranslate(AURL: String): TJSONStringType;
     function ShortCodetoLongCode(AShortCode: String): String;
   public
-
+    {$IFDEF WINDOWS}
+    // From Jamie at the Lazarus forum
+    // Needed in Windows to make artifacts go away
+    procedure WindowChangingPos(Var Msg:TLMWindowPosMsg); Message LM_WindowPOSChanging;
+    {$ENDIF}
   end;
 
 var
@@ -178,8 +182,24 @@ begin
   end;
 end;
 
+{$IFDEF WINDOWS}
+// From Jamie at the Lazarus forum
+// Needed in Windows to make artifacts go away
+procedure TfrmMain.WindowChangingPos(Var Msg:TLMWindowPosMsg);
+ begin
+  Inherited;
+  grbWithArrays.Height:= ClientHeight div 2;
+  pasArraysFromTo.Position:= ClientWidth div 2;
+  pasObjectFromTo.Position:= ClientWidth div 2;
+  Repaint;
+ end;
+{$ENDIF}
+
 procedure TfrmMain.FormResize(Sender: TObject);
 begin
+  {$IFDEF WINDOWS}
+  Exit;
+  {$ENDIF}
   grbWithArrays.Height:= ClientHeight div 2;
   pasArraysFromTo.Position:= ClientWidth div 2;
   pasObjectFromTo.Position:= ClientWidth div 2;
