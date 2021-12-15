@@ -22,6 +22,9 @@ uses
 , jsonparser
 , opensslsockets
 , HTTPDefs
+{$IFDEF WINDOWS}
+, Lmessages
+{$ENDIF}
 ;
 
 type
