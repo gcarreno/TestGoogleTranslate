@@ -1,6 +1,6 @@
 # TestGoogleTranslate
 
-[![Build Status](https://github.com/gcarreno/TestGoogleTranslate/workflows/build-test/badge.svg?branch=main)](https://github.com/gcarreno/TestGoogleTranslate/actions)
+[![Build Status](https://github.com/gcarreno/TestGoogleTranslate/workflows/build/badge.svg?branch=main)](https://github.com/gcarreno/TestGoogleTranslate/actions)
 [![Supports Windows](https://img.shields.io/badge/support-Windows-blue?logo=Windows)](https://github.com/gcarreno/TestGoogleTranslate/releases/latest)
 [![Supprts Linux](https://img.shields.io/badge/support-Linux-yellow?logo=Linux)](https://github.com/gcarreno/TestGoogleTranslate/releases/latest)
 [![Supports macOS](https://img.shields.io/badge/support-macOS-black?logo=macOS)](https://github.com/gcarreno/TestGoogleTranslate/releases/latest)
