@@ -54,7 +54,7 @@ jobs:
         file: bin/testgoogletranslate
 
   package-release:
-    if: conytains(github.ref, '/tags/')
+    if: contains(github.ref, '/tags/')
 
     name: Package and create GitHub Release
     runs-on: ubuntu-latest
