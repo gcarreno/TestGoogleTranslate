@@ -44,14 +44,14 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: TestGoogleTranslate
-        file: bin/testgoogletranslate.exe
+        path: bin/testgoogletranslate.exe
 
     - name: Upload binary (Ubuntu)
       if: ${{ matrix.operating-system == 'ubuntu-latest' && matrix.lazarus-version == 'stable' }}
       uses: actions/upload-artifact@v2
       with:
         name: TestGoogleTranslate
-        file: bin/testgoogletranslate
+        path: bin/testgoogletranslate
 
   package-release:
     if: contains(github.ref, '/tags/')
