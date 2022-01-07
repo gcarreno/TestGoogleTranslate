@@ -78,7 +78,7 @@ jobs:
       run: |
         cd TestGoogleTranslate
         zip -r TestGoogleTranslate-${{ steps.vars.outputs.tag }}-x86_64-win64.zip testgoogletranslate.exe
-        tar -zcvf TestGoogleTranlate-${{ steps.vars.outputs.tag }}-x86_64-linux.tar.gz testgoogletranslate
+        tar -zcvf TestGoogleTranslate-${{ steps.vars.outputs.tag }}-x86_64-linux.tar.gz testgoogletranslate
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
       with:
