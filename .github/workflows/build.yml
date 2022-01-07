@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install Lazarus
-      uses: gcarreno/setup-lazarus@v3
+      uses: gcarreno/setup-lazarus@v3.0.16
       with:
         lazarus-version: ${{ matrix.lazarus-versions }}
 
