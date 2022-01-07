@@ -40,14 +40,14 @@ jobs:
       run: lazbuild -B --bm=Release --ws=cocoa "src/testgoogletranslate.lpi"
 
     - name: Upload binary (Windows)
-      if: ${{ (((matrix.operating-system == 'windows-latest')  &&  (matrix.lazarus-version == 'stable'))) }}
+      if: ${{ (matrix.operating-system == 'windows-latest')  &&  (matrix.lazarus-version == 'stable') }}
       uses: actions/upload-artifact@v2
       with:
         name: TestGoogleTranslate
         path: bin/testgoogletranslate.exe
 
     - name: Upload binary (Ubuntu)
-      if: ${{ (((matrix.operating-system == 'ubuntu-latest')  &&  (matrix.lazarus-version == 'stable'))) }}
+      if: ${{ (matrix.operating-system == 'ubuntu-latest')  &&  (matrix.lazarus-version == 'stable') }}
       uses: actions/upload-artifact@v2
       with:
         name: TestGoogleTranslate
