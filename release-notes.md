@@ -1,3 +1,3 @@
-## TestGoogleTranslate v0.6
+## TestGoogleTranslate v?
 
-- Implemented CI/CD
+- 
