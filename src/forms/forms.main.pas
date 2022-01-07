@@ -23,14 +23,15 @@ uses
 , opensslsockets
 , HTTPDefs
 {$IFDEF WINDOWS}
+// From Jamie at the Lazarus forum
+// Needed in Windows to make artifacts go away
 , Lmessages
 {$ENDIF}
 ;
 
 type
 
-  { TfrmMain }
-
+{ TfrmMain }
   TfrmMain = class(TForm)
     aclMain: TActionList;
     actFileExit: TFileExit;
@@ -75,8 +76,11 @@ type
     procedure InitShortcuts;
     procedure FillCombos;
 
-    function CallGoogleTranslate(AURL: String): TJSONStringType;
     function ShortCodetoLongCode(AShortCode: String): String;
+
+    function CallGoogleTranslate(AURL: String): TJSONStringType;
+
+    //function Parse
   public
     {$IFDEF WINDOWS}
     // From Jamie at the Lazarus forum
@@ -153,6 +157,21 @@ begin
   cobObjectTo.ItemIndex:= 1;
 end;
 
+function TfrmMain.ShortCodetoLongCode(AShortCode: String): String;
+var
+  Index: Integer;
+begin
+  Result:= 'Long name not found for ' + AShortCode;
+  for Index:= 1 to High(cArrayShortLanguages) do
+  begin
+    if AShortCode = cArrayShortLanguages[Index] then
+    begin
+      Result:= cArrayLongLanguages[Index];
+      break;
+    end;
+  end;
+end;
+
 function TfrmMain.CallGoogleTranslate(AURL: String): TJSONStringType;
 var
   client: TFPHTTPClient;
@@ -167,21 +186,6 @@ begin
   finally
     doc.Free;
     client.Free;
-  end;
-end;
-
-function TfrmMain.ShortCodetoLongCode(AShortCode: String): String;
-var
-  Index: Integer;
-begin
-  Result:= 'Long name not found for ' + AShortCode;
-  for Index:= 1 to High(cArrayShortLanguages) do
-  begin
-    if AShortCode = cArrayShortLanguages[Index] then
-    begin
-      Result:= cArrayLongLanguages[Index];
-      break;
-    end;
   end;
 end;
 
